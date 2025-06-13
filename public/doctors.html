@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Doctors - Netra Jyoti Eye Clinic</title>
+    <style>
+        /* CSS Reset & Global Styles */
+        :root {
+            --primary-color: #00838f; /* Teal */
+            --secondary-color: #005662; /* Darker Teal */
+            --accent-color: #ffc107; /* Amber/Gold */
+            --text-dark: #212121;
+            --text-light: #f5f5f5;
+            --bg-light: #ffffff;
+            --bg-grey: #f9f9f9;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            color: var(--secondary-color);
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; margin-bottom: 2rem; }
+        h3 { font-size: 1.5rem; }
+        
+        p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 86, 98, 0.3);
+        }
+
+        /* Header & Navigation */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .main-header.scrolled {
+             box-shadow: var(--shadow);
+             background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .navbar .logo i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-dark);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a.active::after,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links .btn {
+            margin-left: 30px;
+            padding: 10px 24px;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding-top: 160px;
+            padding-bottom: 80px;
+            background: linear-gradient(rgba(0, 86, 98, 0.7), rgba(0, 86, 98, 0.7)), url('https://images.unsplash.com/photo-1579684385127-6ab18a5d7814?q=80&w=1974&auto=format&fit=crop') no-repeat center center/cover;
+            color: var(--text-light);
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            color: var(--text-light);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .page-header p {
+            color: #e0e0e0;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        /* Doctors Grid */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .doctor-card {
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .doctor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .doctor-card-img {
+            height: 350px;
+            overflow: hidden;
+        }
+        
+        .doctor-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.4s ease;
+        }
+        
+        .doctor-card:hover .doctor-card-img img {
+            transform: scale(1.05);
+        }
+        
+        .doctor-card-content {
+            padding: 2rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doctor-card-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .doctor-card-content .specialty {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .doctor-card-content p {
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+            color: #555; /* Ensuring p tag color is consistent */
+        }
+        
+        .doctor-card-content .btn {
+            margin-top: auto;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 60px 0 20px 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h4 {
+            color: var(--bg-light);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-col p, .footer-col ul li a {
+            color: #ccc;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--bg-light);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease-in-out;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 20px 0; }
+            .nav-links .btn { margin-left: 0; }
+            .hamburger { display: block; font-size: 24px; color: var(--secondary-color); }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header" id="main-header">
+        <nav class="navbar container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-eye"></i> Netra Jyoti
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="doctors.html" class="active">Doctors</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="appointment.html" class="btn btn-primary">Book Appointment</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="container">
+                <h1>Our Expert Medical Team</h1>
+                <p>Meet the highly qualified and experienced ophthalmologists dedicated to providing you with the best possible eye care.</p>
+            </div>
+        </header>
+
+        <!-- Doctors Grid Section -->
+        <section class="section">
+            <div class="container">
+                <div class="doctors-grid">
+                    <div class="doctor-card">
+                        <div class="doctor-card-img">
+                            <img src="https://images.unsplash.com/photo-1622253692010-33352da55e0d?q=80&w=1964&auto=format&fit=crop" alt="Dr. Anjali Sharma">
+                        </div>
+                        <div class="doctor-card-content">
+                            <h3>Dr. Anjali Sharma</h3>
+                            <span class="specialty">MBBS, MS (Ophthalmology)<br>Cataract & Refractive Surgeon</span>
+                            <p>With over 15 years of experience from AIIMS, Dr. Sharma is a pioneer in laser-assisted cataract surgery and has performed over 10,000 successful procedures.</p>
+                            <a href="appointment.html" class="btn btn-primary">Book with Dr. Sharma</a>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-card-img">
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop" alt="Dr. Rohan Verma">
+                        </div>
+                        <div class="doctor-card-content">
+                            <h3>Dr. Rohan Verma</h3>
+                            <span class="specialty">MBBS, DNB, FICO<br>Glaucoma & Cornea Specialist</span>
+                            <p>Dr. Verma is a renowned expert in managing complex glaucoma cases and performing corneal transplants. He is an international fellow from Johns Hopkins University, USA.</p>
+                            <a href="appointment.html" class="btn btn-primary">Book with Dr. Verma</a>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-card-img">
+                            <img src="https://plus.unsplash.com/premium_photo-1661764878654-3d0851c84f23?q=80&w=2070&auto=format&fit=crop" alt="Dr. Priya Desai">
+                        </div>
+                        <div class="doctor-card-content">
+                            <h3>Dr. Priya Desai</h3>
+                            <span class="specialty">MBBS, MS, FPOS<br>Pediatric & Squint Specialist</span>
+                            <p>Dr. Desai has a special interest in children's eye health. Her gentle approach and expertise in treating squint and lazy eye make her a favorite among young patients and parents.</p>
+                            <a href="appointment.html" class="btn btn-primary">Book with Dr. Desai</a>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-card-img">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop" alt="Dr. Vikram Singh">
+                        </div>
+                        <div class="doctor-card-content">
+                            <h3>Dr. Vikram Singh</h3>
+                            <span class="specialty">MBBS, MD (Ophthalmology)<br>Retina Specialist</span>
+                            <p>Dr. Singh specializes in the medical and surgical management of retinal diseases, including diabetic retinopathy and age-related macular degeneration (ARMD).</p>
+                             <a href="appointment.html" class="btn btn-primary">Book with Dr. Singh</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Netra Jyoti Clinic</h4>
+                    <p>Providing comprehensive and compassionate eye care to our community. Your vision is our mission.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="doctors.html">Our Doctors</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="appointment.html">Book Appointment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services.html#cataract">Cataract Surgery</a></li>
+                        <li><a href="services.html#lasik">LASIK Surgery</a></li>
+                        <li><a href="services.html#glaucoma">Glaucoma Treatment</a></li>
+                        <li><a href="services.html#pediatric">Pediatric Eye Care</a>
+                        <li><a href="services.html#retina">Retina Care</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Vision Street, New Delhi, 110001, India</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> contact@netrajyoti.in</p>
+                    <p><i class="fas fa-clock"></i> Mon - Sat: 9:00 AM - 7:00 PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Netra Jyoti Eye Clinic. All Rights Reserved. Designed with care.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const header = document.getElementById('main-header');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        // Sticky header
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
