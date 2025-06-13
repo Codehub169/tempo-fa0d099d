@@ -30,6 +30,9 @@ body {
     background-color: var(--bg-light); /* Base background for site */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    display: flex; /* Added for sticky footer */
+    flex-direction: column; /* Added for sticky footer */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
 }
 
 .container {
@@ -179,15 +182,21 @@ a:hover {
     color: var(--secondary-color);
 }
 
+/* Main Content Area */
+main {
+    flex-grow: 1; /* Added for sticky footer */
+    padding-top: 80px; /* Account for fixed header for all pages */
+}
+
 /* Hero Section (from index.html) */
 .hero {
     background: linear-gradient(rgba(0, 86, 98, 0.1), rgba(0, 86, 98, 0.1)), url('https://images.unsplash.com/photo-1581888224552-3e4a3d1c554e?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
-    height: 100vh;
+    min-height: calc(100vh - 80px); /* Full viewport height minus header */
     display: flex;
     align-items: center;
     color: var(--text-dark);
     text-align: left;
-    padding-top: 80px; /* Account for fixed header */
+    /* padding-top: 80px;  Removed, handled by main */
 }
 
 .hero-content {
@@ -208,7 +217,8 @@ a:hover {
 
 /* Page Header (for sub-pages like services, doctors, contact) */
 .page-header {
-    padding-top: 160px; /* 80px header + 80px padding */
+    /* padding-top: 160px; Removed, handled by main + its own padding */
+    padding-top: 80px; /* Reduced as main already has 80px padding-top */
     padding-bottom: 80px;
     background-size: cover;
     background-position: center center;
@@ -530,11 +540,13 @@ a:hover {
 
 /* Appointment Section (from appointment.html) */
 .appointment-section {
-    padding: 140px 0 80px;
+    /* padding: 140px 0 80px; Removed, handled by main + its own padding */
+    padding-top: 60px; /* Reduced as main already has 80px padding-top */
+    padding-bottom: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg-grey); /* Specific background for this section area */
+    background-color: var(--bg-grey);
 }
 
 .appointment-container {
@@ -591,7 +603,7 @@ a:hover {
 }
 
 .appointment-form .form-control:valid {
-    border-color: var(--success-color);
+    /* border-color: var(--success-color); */ /* Optional: style valid inputs */
 }
 
 .form-row {
@@ -611,7 +623,8 @@ a:hover {
     font-size: 1.1rem;
 }
 
-#success-message, #error-message-container /* For appointment form responses */ {
+/* Appointment form response messages */
+#response-message-container {
     display: none;
     padding: 1.5rem;
     border-radius: var(--border-radius);
@@ -619,23 +632,26 @@ a:hover {
     margin-top: 2rem;
     color: white;
 }
-#success-message {
+#response-message-container.success {
     background-color: var(--success-color);
 }
-#error-message-container {
+#response-message-container.error {
     background-color: var(--error-color);
 }
 
-#success-message h3, #error-message-container h3 {
+#response-message-container.success h3,
+#response-message-container.error h3 {
     color: white;
     margin-bottom: 0.5rem;
 }
 
+
 /* Contact Section (from contact.html) */
 .contact-section {
-    padding-top: 140px; /* Adjusted for fixed header */
+    /* padding-top: 140px; Removed, handled by main + its own padding */
+    padding-top: 60px; /* Reduced as main already has 80px padding-top */
     padding-bottom: 80px;
-    background-color: var(--bg-grey); /* Specific background for this section area */
+    background-color: var(--bg-grey);
 }
 
 .contact-wrapper {
@@ -694,6 +710,7 @@ a:hover {
     background-color: var(--secondary-color);
     color: var(--text-light);
     padding: 60px 0 20px 0;
+    margin-top: auto; /* For sticky footer */
 }
 
 .footer-grid {
@@ -725,6 +742,7 @@ a:hover {
 
 .footer-col ul {
     list-style: none;
+    padding-left: 0;
 }
 
 .footer-col ul li {
@@ -768,7 +786,7 @@ a:hover {
     h2 { font-size: 2rem; }
     
     .why-us-content { grid-template-columns: 1fr; }
-    .why-us-image { margin-bottom: 2rem; order: -1; /* Image on top on mobile for why-us */ }
+    .why-us-image { margin-bottom: 2rem; order: -1; }
 
     .service-item, .service-item:nth-child(even) {
         grid-template-columns: 1fr;
@@ -777,18 +795,22 @@ a:hover {
         margin-bottom: 2rem;
     }
     .service-item:nth-child(even) .service-image {
-        order: 1; /* Reset order for alternating items */
+        order: 1;
     }
 
     .contact-wrapper {
         grid-template-columns: 1fr;
+    }
+    .map-container {
+        margin-top: 2rem;
+        min-height: 300px;
     }
 }
 
 @media (max-width: 768px) {
     .nav-links {
         position: fixed;
-        top: 80px; /* Height of header */
+        top: 80px;
         right: -100%;
         width: 100%;
         height: calc(100vh - 80px);
@@ -812,15 +834,28 @@ a:hover {
         display: block;
     }
     
+    main {
+        padding-top: 80px; /* Ensure content starts below fixed header */
+    }
+
     .hero {
         text-align: center;
-        padding-top: 120px; /* Adjust padding for centered text on mobile */
-        height: auto;
-        min-height: 80vh;
+        /* padding-top: 120px; Removed, main handles top padding */
+        min-height: calc(100vh - 80px); /* Adjust height considering header */
         padding-bottom: 40px;
     }
     .hero-content {
         margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .page-header {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .section {
+        padding: 60px 0;
     }
 
     .form-row {
@@ -829,6 +864,11 @@ a:hover {
     
     .appointment-container, .contact-wrapper {
         padding: 2rem;
+    }
+
+    .appointment-section, .contact-section {
+        padding-top: 40px;
+        padding-bottom: 60px;
     }
 
     .footer-grid {
@@ -841,5 +881,8 @@ a:hover {
     }
     .social-links {
         justify-content: center;
+    }
+    .footer-col ul {
+        padding-left: 0;
     }
 }
